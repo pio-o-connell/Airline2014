@@ -1,0 +1,38 @@
+#main {
+    width:800px;
+    margin:auto;
+    border:black solid 1px;
+    overflow:auto;
+}
+
+#header{
+    /*@import "mystyles.css";*/
+    text-align:center;
+    border:black solid 1px; 
+}
+
+#menu{
+    height:40px;
+    border:black solid 1px;
+    text-align:right;
+    float:left;
+    /*                width:100px;*/
+
+}
+
+#bloggerlist{
+    float:left;
+    width:100px;
+    border:white solid 1px;
+}
+
+
+#content{
+    float:left;
+    width:576px;
+    border:white solid 1px;
+    padding:10px
+
+}
+
+
