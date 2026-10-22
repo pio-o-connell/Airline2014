@@ -1,433 +1,120 @@
-# PHP Airlines
+# Airline2014
 
-## Airline Booking and Passenger Management System
+Airline2014 is an original 2014 PHP airline booking application being restored and documented for local use. It provides customer booking and administrator route-management workflows backed by a MySQL database.
 
-**PHP Airlines** is a PHP/MySQL airline booking and passenger management system developed in **2014** as part of the **Higher Diploma in Cloud and Mobile with Data Science**.
+The goal of this repository is to preserve the original PHP architecture and interface, not to rewrite or redesign the application. The screenshots below document the application as it was implemented.
 
-The project provides a web-based system for searching airline routes, selecting flights and seats, managing bookings, and administering routes and flight manifests.
-
-This repository contains the original coursework source and database from the 2014 project.
-
----
-
-## Project Overview
-
-PHP Airlines allows customers to:
-
-* Search available airline routes
-* Select a travel date
-* Select the number of tickets required
-* Check flight and seat availability
-* Select seats
-* Add flights to a shopping cart
-* Review and modify provisional bookings
-* Register as a customer
-* Purchase tickets
-* View their booking information
-
-An administrator can:
-
-* Log in to the administration area
-* Add new routes
-* Edit route prices
-* Delete routes
-* View flight manifests
-* View individual flight details
-* View passenger and seat information
-* Calculate flight revenue
-
----
-
-## Application Architecture
-
-The application follows a simple controller/view/database architecture.
-
-```text
-                    Browser
-                       |
-                       v
-                 controller.php
-                       |
-             Command / Request Routing
-                       |
-          +------------+------------+
-          |                         |
-          v                         v
-      View Classes              DBManager
-          |                         |
-          |                         v
-          |                    MySQL Database
-          |                     airline2013
-          |
-          v
-       HTML/CSS
-```
-
-The main application logic is contained in `library.php`, while `controller.php` acts as the central request router.
-
----
-
-## Customer Booking Flow
-
-The main customer workflow is:
-
-```text
-Search
-  |
-  v
-Select Route
-  |
-  v
-Select Number of Tickets
-  |
-  v
-Select Date
-  |
-  v
-View Flight Results
-  |
-  v
-Check Available Seats
-  |
-  v
-Add Flight to Cart
-  |
-  v
-Select / Modify Seats
-  |
-  v
-Checkout
-  |
-  v
-Enter Customer Details
-  |
-  v
-Complete Booking
-  |
-  v
-passangers table
-```
-
-The shopping cart is maintained using a PHP session rather than being stored permanently in the database.
-
-A booking is written to the database when the transaction is processed.
-
----
-
-## Administration
-
-The application provides a separate administration workflow.
-
-The original implementation identifies the administrator using the username `rmiller`.
-
-The administrator can:
-
-* View routes
-* Add routes
-* Edit route prices
-* Delete routes
-* View the flight manifest
-* Open individual flights
-* View passengers and seat allocations
-* View ticket revenue
-
-The manifest functionality provides a view of flights that have passenger bookings associated with them.
-
----
-
-## Seat Management
-
-The application models a flight with **20 seats**.
-
-Seat information is maintained by the `Cart` class and checked against existing passenger records in the database.
-
-The booking system records the selected seat number in the `passangers` table.
-
-Example historical booking data includes seats such as:
-
-```text
-7
-8
-9
-10
-11
-12
-```
-
-The original application therefore included actual seat-allocation functionality rather than simply recording a number of tickets.
-
----
-
-## Database
-
-The application uses a MySQL database named:
-
-```text
-airline2013
-```
-
-The database dump is provided in:
-
-```text
-airline.sql
-```
-
-The main tables used by the application are:
-
-### `user`
-
-Stores registered customer information, including:
-
-* Username
-* Password
-* Email
-* Credit card number
-* Passport number
-* Account suspension status
-
-### `routes`
-
-Stores airline routes, including:
-
-* Source
-* Destination
-* Operational start date
-* Operational end date
-* Ticket price
-
-### `passangers`
-
-Stores passenger booking information, including:
-
-* Passenger name
-* Passport
-* Route
-* Travel date
-* Registered/guest status
-* Registered username
-* Credit card number
-* Email
-* Seat number
-
-> **Note:** `passangers` is the original spelling used by the 2014 database schema and source code.
-
-### `login`
-
-Contains the original application login records.
-
----
-
-## Project Files
-
-The principal files include:
-
-```text
-controller.php
-library.php
-mysyles.css
-insidestyles.css
-airline.sql
-```
-
-### `controller.php`
-
-The main application controller.
-
-It receives commands through GET and POST requests and directs them to the appropriate view or processing function.
-
-Examples include:
-
-```text
-login
-register
-search
-addToCart
-checkoutView
-purchase
-registerRequest
-editroute
-amendroute
-deleteRoutes
-addRoutes
-addRoute
-manifest
-openflight
-logout
-```
-
-### `library.php`
-
-Contains the main application classes, including:
-
-* `OutsideView`
-* `InsideView`
-* `loginView`
-* `registerView`
-* `SearchView`
-* `ResultsView`
-* `purchaseView`
-* `CheckoutView`
-* `adminView`
-* `adminEditView`
-* `adminAddRoute`
-* `adminManifest`
-* `Cart`
-* `DBManager`
-
-### `mysyles.css`
-
-Provides the main external page styling.
-
-The original filename is retained as supplied by the 2014 project.
-
-### `insidestyles.css`
-
-Provides styling for the internal/admin pages.
-
-### `airline.sql`
-
-Contains the original MySQL database schema and sample data.
-
----
+Originally developed as part of the **Higher Diploma in Cloud and Mobile with Data Science**, the project reflects the web development practices and conventions of its time.
 
 ## Technologies
 
-The original project was developed using technologies typical of the 2014 coursework environment:
+The project uses the following technologies:
 
-* **PHP 5.4**
-* **MySQL 5.5**
-* **PDO**
-* **HTML**
-* **CSS**
-* **PHP Sessions**
-* **HTTP Cookies**
-* **phpMyAdmin**
+- PHP
+- MySQL
+- PDO for database access
+- HTML forms and server-rendered views
+- CSS (`mystyles.css` and `insidestyles.css`)
+- PHP sessions and cookies for cart and login state
 
-The original database dump records the following environment information:
+There is no standalone JavaScript source file in this repository; the application is primarily server-rendered PHP and HTML.
 
-```text
-PHP       5.4.19
-MySQL     5.5.32
-phpMyAdmin 4.0.4.1
+The supplied SQL dump was generated with PHP 5.4.19, MySQL 5.5.32, and phpMyAdmin 4.0.4.1 on 13 January 2014. Newer local PHP/MySQL versions may require compatibility changes that are outside the scope of this restoration.
+
+## Features
+
+### Customer booking
+
+- Search routes by origin, destination, travel date, and number of tickets
+- Display matching flight results
+- Check availability across the application's 20-seat flight model
+- Select seats and add a provisional flight to the session-backed cart
+- Review, update, or remove cart items
+- Register a customer account or continue as a guest
+- Enter passenger, passport, email, and payment details
+- Complete a booking and write passenger and seat records to the database
+- Log in and log out
+
+### Administration
+
+- Log in to the administration area
+- View active routes
+- Add routes with operating dates and prices
+- Edit route prices
+- Delete routes
+- View a flight manifest
+- Open flight details, including passenger and seat information
+- View the route and passenger data used to calculate flight revenue
+
+## Screenshots
+
+The screenshots are existing captures of the original application. They document the customer booking flow and administrative screens without changing the application itself.
+
+### Customer workflow
+
+| Screen | Description |
+|---|---|
+| ![Home screen](assets/Images/homescreen.jpg) | Guest home screen with route, ticket, and date search |
+| ![Login](assets/Images/login.jpg) | Customer login form |
+| ![Registration](assets/Images/register.jpg) | Customer registration form |
+| ![Logged in](assets/Images/logged-in.jpg) | Search screen for a logged-in customer |
+| ![Search](assets/Images/search.jpg) | Route search |
+| ![Search results](assets/Images/search-results.jpg) | Available flight results |
+| ![Availability](assets/Images/availability.jpg) | Seat availability |
+| ![Booked seats](assets/Images/seats-booked.jpg) | Seat allocation after booking |
+| ![Booked seats PNG](assets/Images/seats-booked.png) | Additional seat-allocation capture |
+| ![Purchase complete](assets/Images/purchased.jpg) | Completed purchase screen |
+
+### Administration workflow
+
+| Screen | Description |
+|---|---|
+| ![Edit routes](assets/Images/admin-view-edit-routes.jpg) | Administrator route list and editing options |
+| ![Add routes](assets/Images/admin-add-routes.jpg) | Add-route form |
+| ![Add route](admi-add-route.jpg) | Additional add-route capture |
+| ![Flight manifest](assets/Images/admi-view-mainfest.jpg) | Flight manifest and administration view |
+
+## Running locally
+
+The application is a traditional PHP application with `controller.php` as its entry point.
+
+1. Install a local PHP runtime with the PDO MySQL extension and a MySQL server.
+2. Create or import the `airline2013` database from [`airline2013.sql`](airline2013.sql).
+3. Check the database host, port, username, password, and database name in `DBManager` in [`library.php`](library.php). Use local configuration appropriate for your machine rather than copying credentials from the historical source.
+4. Serve the repository from a PHP-enabled web server.
+5. Open `controller.php` in a browser.
+
+For the current local development environment, the PHP development server can be started from PowerShell in the project directory:
+
+```powershell
+& "C:\php-8.4.26\php.exe" -S localhost:8000
 ```
 
-The SQL dump was generated on:
+The application can then be opened at:
 
-```text
-13 January 2014
-```
+http://localhost:8000/controller.php
 
----
+The local MySQL instance uses host `127.0.0.1`, port `3307`, and database `airline2013`. The database username and password should remain specific to the local environment.
 
-## Design
+The SQL dump contains the original schema and sample data for the `login`, `user`, `routes`, and `passangers` tables. `passangers` is the historical spelling retained by the source and schema.
 
-The original interface uses a fixed-width layout of approximately 800 pixels.
+## Project structure
 
-The CSS uses traditional floating layouts:
+- [`controller.php`](controller.php) — central GET/POST command router and request handlers
+- [`library.php`](library.php) — view classes, cart behavior, seat processing, and `DBManager`
+- [`airline2013.sql`](airline2013.sql) — MySQL schema and sample data
+- [`mystyles.css`](mystyles.css) — customer-facing styles
+- [`insidestyles.css`](insidestyles.css) — internal and administration styles
+- [`assets/Images/`](assets/Images/) — existing application screenshots
 
-```text
-+----------------------------------------+
-|                Header                  |
-+----------------------------------------+
-| Menu |             Content             |
-|      |                                  |
-|      |                                  |
-+------+---------------------------------+
-```
+The original interface uses a fixed-width layout of approximately 800 pixels and traditional CSS floats rather than a modern responsive framework. The source also contains historical naming and implementation patterns from the 2014 project.
 
-The project predates responsive web design frameworks and modern CSS layout systems such as Flexbox and Grid.
+The central controller dispatches requests to the relevant application logic and views. Supporting classes handle page presentation, cart operations, seat processing, and database access. This original structure is retained as part of the restoration.
 
-Some of the original CSS and class names also reflect code that was reused or adapted from earlier coursework. For example, the `bloggerlist` naming remains in parts of the source even though the application had evolved into an airline booking system.
+## Legacy status
 
----
+This is a historical and educational application, not a production-ready booking system.
 
-## Historical Context
+Before any real-world use, it would require a security and reliability review, including replacing plain-text credential handling, parameterising database queries, protecting sensitive customer and payment data, and updating legacy PHP/database conventions.
 
-PHP Airlines was created in **2014** as part of the:
-
-**Higher Diploma in Cloud and Mobile with Data Science**
-
-The project represents the development practices and technology stack used during that period.
-
-The source has been retained as a historical coursework project rather than rewritten into a modern PHP application.
-
-Consequently, the repository is useful for documenting the original implementation and the progression of the project rather than representing current production-quality PHP development.
-
----
-
-## Legacy Considerations
-
-The original code contains a number of characteristics that would require attention before using the application in a modern production environment.
-
-These include:
-
-* Plain-text password handling
-* Direct SQL construction
-* Lack of prepared statements
-* Storage of sensitive customer/payment information
-* Reliance on cookies for login state
-* Fixed-width page layouts
-* Mixed PHP, HTML and database logic
-* Legacy PHP/MySQL APIs and conventions
-* Some incomplete or experimental functions
-* Historical code and naming inherited from earlier coursework
-
-These characteristics are retained here because the purpose of this repository is to preserve and understand the original 2014 implementation.
-
----
-
-## Original Application Model
-
-At a high level, the application can be represented as:
-
-```text
-                   PHP Airlines
-                        |
-          +-------------+-------------+
-          |                           |
-       Customer                    Admin
-          |                           |
-     Flight Search              Route Management
-          |                           |
-     Flight Results             Route Editing
-          |                           |
-       Seat Selection           Route Deletion
-          |                           |
-         Cart                    Add Routes
-          |                           |
-       Checkout                  Manifest
-          |                           |
-       Purchase                Flight Details
-          |                           |
-          +-------------+-------------+
-                        |
-                        v
-                   DBManager
-                        |
-                        v
-                  airline2013
-                        |
-          +-------------+-------------+
-          |             |             |
-        user         routes      passangers
-```
-
----
-
-## Project Status
-
-**Historical / Educational Project — 2014**
-
-The project is being preserved and documented from its original source code and database.
-
-The intention is to understand and retain the original application rather than to present it as a modern production-ready airline booking platform.
-
----
-
-## Author / Coursework
-
-Developed as coursework in **2014** for the:
-
-**Higher Diploma in Cloud and Mobile with Data Science**
-
-Project: **PHP Airlines — Airline Booking and Passenger Management System**
+The immediate objective is to preserve the original application, document its functionality, and establish a working local reference. Any future modernisation should be treated as a deliberate subsequent stage rather than a replacement for the original project.
